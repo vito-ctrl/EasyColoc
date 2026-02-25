@@ -159,7 +159,7 @@
 
         {{-- Back link --}}
         <p class="text-center text-xs text-zinc-600">
-            <a href="{{ url()->previous() }}" class="hover:text-zinc-400 transition-colors duration-150">← Go back</a>
+            {{-- <a href="{{ url()->previous() }}" class="hover:text-zinc-400 transition-colors duration-150">← Go back</a> --}}
         </p>
 
     </div>
