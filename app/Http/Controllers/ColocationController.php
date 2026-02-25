@@ -29,42 +29,42 @@ class ColocationController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-    //     Colocation::create([
-    //         'name' => $request->name,
-    //         'owner_id' => auth()->id(),
-    //     ]);
+        Colocation::create([
+            'name' => $request->name,
+            'owner_id' => auth()->id(),
+        ]);
 
-    //     return redirect()->route('dashboard')->with('success', 'Colocation created.');
-    // }
+        return redirect()->route('dashboard')->with('success', 'Colocation created.');
+    }
 
-    // public function invite(Request $request, Colocation $colocation)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email|exists:users,email',
-    //     ]);
+    public function invite(Request $request, Colocation $colocation)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
 
-    //     $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-    //     // Prevent inviting a user who already belongs
-    //     if ($colocation->members()->where('user_id', $user->id)->exists()) {
-    //         return back()->with('error', 'User already in this colocation.');
-    //     }
+        // Prevent inviting a user who already belongs
+        if ($colocation->members()->where('user_id', $user->id)->exists()) {
+            return back()->with('error', 'User already in this colocation.');
+        }
 
-    //     $token = Str::uuid(); // unique token
+        $token = Str::uuid(); // unique token
 
-    //     $colocation->members()->attach($user->id, [
-    //         'status' => 'pending',
-    //         'token' => $token,
-    //     ]);
+        $colocation->members()->attach($user->id, [
+            'status' => 'pending',
+            'token' => $token,
+        ]);
 
-    //     // Send email (simplified using Laravel Mail)
-    //     Mail::raw(
-    //         "You have been invited to join colocation '{$colocation->name}'. Accept here: " . route('colocations.accept', $token),
-    //         function ($message) use ($user) {
-    //             $message->to($user->email)
-    //                     ->subject('Invitation to join colocation');
-    //         }
-    //     );
+        // Send email (simplified using Laravel Mail)
+        Mail::raw(
+            "You have been invited to join colocation '{$colocation->name}'. Accept here: " . route('colocations.accept', $token),
+            function ($message) use ($user) {
+                $message->to($user->email)
+                        ->subject('Invitation to join colocation');
+            }
+        );
 
         return back()->with('success', 'Invitation sent!');
     }
