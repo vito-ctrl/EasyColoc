@@ -151,15 +151,15 @@
                                       d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                             </svg>
                             Send Invite
-                        </button>
+                        {{-- </button>
                     </div>
-                </form>
+                </form> --}}
             </div>
         </div>
 
         {{-- Back link --}}
         <p class="text-center text-xs text-zinc-600">
-            {{-- <a href="{{ url()->previous() }}" class="hover:text-zinc-400 transition-colors duration-150">← Go back</a> --}}
+            <a href="{{ url()->previous() }}" class="hover:text-zinc-400 transition-colors duration-150">← Go back</a>
         </p>
 
     </div>
