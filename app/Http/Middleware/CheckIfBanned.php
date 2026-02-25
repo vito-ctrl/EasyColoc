@@ -16,11 +16,11 @@ class CheckIfBanned
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check() && auth()->user()->banned_at) {
-            auth()->logout();
-            return redirect()->route('login')
-                ->with('error', 'Your account has been banned.');
-        }
-        
+        //     auth()->logout();
+        //     return redirect()->route('login')
+        //         ->with('error', 'Your account has been banned.');
+        // }
+
         return $next($request);
     }
 }
