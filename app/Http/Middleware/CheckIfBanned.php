@@ -13,13 +13,13 @@ class CheckIfBanned
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    // public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check() && auth()->user()->banned_at) {
-        //     auth()->logout();
-        //     return redirect()->route('login')
-        //         ->with('error', 'Your account has been banned.');
-        // }
+            auth()->logout();
+            return redirect()->route('login')
+                ->with('error', 'Your account has been banned.');
+        }
 
         return $next($request);
     }
