@@ -11,6 +11,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div>
+                <button class="p-2 bg-gray-400 rounded"><a href="hi">create accommodation</a></button>
             </div>
         </div>
     </div>

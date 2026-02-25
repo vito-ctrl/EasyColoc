@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'reputation_score',
+        'banned_at'
     ];
 
     /**
@@ -44,5 +47,28 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            if (self::count() === 0) {
+                $user->is_admin = 1;
+            } else {
+                $user->is_admin = 0;
+            }
+        });
+    }
+
+    public function ownedColocations()
+    {
+        return $this->hasMany(Colocation::class, 'owner_id');
+    }
+
+    public function colocations()
+    {
+        return $this->belongsToMany(Colocation::class)
+            ->withPivot('status', 'token')
+            ->withTimestamps();
     }
 }
