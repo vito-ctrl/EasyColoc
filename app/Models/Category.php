@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categorie extends Model
+class Category extends Model
 {
     protected $fillable = [
         'name',
@@ -12,6 +12,10 @@ class Categorie extends Model
     ];
 
     public function colocation () {
-        return $this->belongsTo(Colocation::class, 'colocation_id');
+        return $this->belongsTo(Colocation::class);
+    }
+
+    public function expense () {
+        return $this->hasMany(Expense::class);
     }
 }

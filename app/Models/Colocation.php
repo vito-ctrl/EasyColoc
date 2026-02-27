@@ -26,7 +26,11 @@ class Colocation extends Model
             ->withTimestamps();
     }
 
-    // public function expense() {
-    //     return $this->belongsToMany(Expense::class, 'id');
-    // }
+    public function expenses() {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function categories() {
+        return $this->hasMany(category::class);
+    }
 }
