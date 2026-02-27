@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('colocation_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'accepted'])->default('pending');
-            $table->string('token')->unique();
+            $table->string('token')->unique()->nullable();
+            $table->string('role')->default('member');
+            $table->timestamp('left_at')->nullable();
             $table->timestamps();
         });
     }

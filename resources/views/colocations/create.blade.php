@@ -1,4 +1,4 @@
-{{-- @extends('layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
@@ -84,4 +84,4 @@
 
     </div>
 </div>
-@endsection --}}
+@endsection

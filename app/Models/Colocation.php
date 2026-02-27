@@ -22,7 +22,7 @@ class Colocation extends Model
     public function members()
     {
         return $this->belongsToMany(User::class)
-            ->withPivot('status', 'token')
+            ->withPivot('status', 'token', 'role', 'left_at')
             ->withTimestamps();
     }
 
