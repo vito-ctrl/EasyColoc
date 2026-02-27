@@ -15,10 +15,14 @@ class Expense extends Model
     ];
 
     public function maker () {
-        return $this->belongsTo(Categorie::class, 'payer_id');
+        return $this->belongsTo(User::class, 'payer_id');
     }
 
     public function colocation () {
-        retrun $this->belongsTo(colocation::class, 'colocation_id');
+        return $this->belongsTo(colocation::class, 'colocation_id');
+    }
+
+    public function categorie () {
+        return $this->belongsTo(Categorie::class, 'category_id');
     }
 }
