@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColocationController;
-
+use App\Http\Controllers\DepenseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +38,12 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
 
     Route::post('/colocations/{id}/leave', [ColocationController::class , 'leave'])
         ->name('colocations.leave');
+
+    Route::get('/depense', [DepenseController::class, 'index'])
+        ->name('depense');
+
+    Route::get('/depense/create', [DepenseController::class], 'create')
+        ->name('create');
 });
 
 

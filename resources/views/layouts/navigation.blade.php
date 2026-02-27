@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('deposit')" :active="request()->routeIs('deposit')">
+                    <x-nav-link :href="route('depense')" :active="request()->routeIs('deposit')">
                         {{ __('deposit') }}
                     </x-nav-link>
                 </div>
