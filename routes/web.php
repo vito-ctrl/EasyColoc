@@ -42,8 +42,11 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
     Route::get('/depense', [DepenseController::class, 'index'])
         ->name('depense');
 
-    Route::get('/depense/create', [DepenseController::class], 'create')
-        ->name('create');
+    Route::get('/depense/create', [DepenseController::class, 'create'])
+        ->name('depense.create');
+
+    Route::get('/depense/store', [DepenseController::class, 'store'])
+        ->name('depense.store');
 });
 
 

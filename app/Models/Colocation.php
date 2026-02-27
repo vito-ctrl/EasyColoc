@@ -26,11 +26,20 @@ class Colocation extends Model
             ->withTimestamps();
     }
 
+    public function activeMembers()
+    {
+        return $this->belongsToMany(User::class)
+            ->wherePivot('status', 'accepted')
+            ->wherePivotNull('left_at')
+            ->withPivot('status', 'role', 'left_at')
+            ->withTimestamps();
+    }
+
     public function expenses() {
         return $this->hasMany(Expense::class);
     }
 
     public function categories() {
-        return $this->hasMany(category::class);
+        return $this->hasMany(Category::class);
     }
 }
