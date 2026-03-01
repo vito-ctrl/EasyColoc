@@ -22,6 +22,7 @@ class DepenseController extends Controller
         $categories = $colocation->categories;
 
         
+        
         return view('depenses.create', compact('users', 'colocation', 'categories'));
     }
 
@@ -45,11 +46,21 @@ class DepenseController extends Controller
             'category_id' => $request->category_id,
         ]);
 
-        // $depense->members()->attach(auth()->id(), [
-        //     'status' => 'active',
-        //     'role' => 'owner',
-        // ]);
+        $colocation = Colocation::findOrFail($request->colocation_id);
+        $members = $colocation->activeMembers()->get();
 
-        return redirect()->route('create')->with('success', 'Colocation created.');
+        $count = $members->count();
+
+        if ($count > 0) {
+            $share = round($amount / $count, 2);
+
+            foreach ($members as $member) {
+                $depense->users()->attach($member->id, [
+                    'share' => $share,
+                ]);
+            }
+        }
+
+        return back()->with('success', 'Colocation created.');
     }
 }

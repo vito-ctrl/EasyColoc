@@ -71,4 +71,12 @@ class User extends Authenticatable
             ->withPivot('status', 'token', 'role', 'left_at')
             ->withTimestamps();
     }
+
+    public function expenses()
+    {
+        return $this->belongsToMany(Expense::class)
+                    ->withPivot('share')
+                    ->withTimestamps();
+    }
+
 }

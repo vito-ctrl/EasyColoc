@@ -68,7 +68,8 @@
                     </div>
                 @else
                     <ul class="divide-y divide-zinc-800/80">
-                        @foreach($colocation->members->whereNull('pivot.left_at') as $member)
+                        {{-- {{dd($members)}} --}}
+                        @foreach($members as $member)
                             <li class="flex items-center justify-between py-3.5 group">
                                 <div class="flex items-center gap-3">
                                     {{-- Avatar initials --}}
@@ -83,6 +84,12 @@
                                         </span>
                                         <span class="text-xs text-zinc-500">
                                             {{ ucfirst($member->pivot->role) }}
+                                        </span>
+                                        <span class="
+                                            {{ $member->balance > 0 ? 'text-emerald-400' : 
+                                            ($member->balance < 0 ? 'text-red-400' : 'text-zinc-400') }}
+                                        ">
+                                            {{ number_format($member->balance, 2) }} €
                                         </span>
                                     </div>
                                 </div>

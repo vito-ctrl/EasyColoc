@@ -45,7 +45,22 @@ class ColocationController extends Controller
     {
         $colocation = Colocation::with('members')->findOrFail($id);
 
-        return view('colocations.show', compact('colocation'));
+        $members = $colocation->activeMembers()->get();
+
+        foreach ($members as $member) {
+
+            $totalOwes = $member->expenses()
+                ->where('colocation_id', $colocation->id)
+                ->sum('expense_user.share');
+
+            $totalPaid = Expense::where('colocation_id', $colocation->id)
+                ->where('payer_id', $member->id)
+                ->sum('amount');
+
+            $member->balance = $totalPaid - $totalOwes;
+        }
+
+        return view('colocations.show', compact('colocation', 'members'));
     }
 
     public function store(Request $request)

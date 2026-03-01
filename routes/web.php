@@ -52,9 +52,6 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
     Route::post('/depense/store', [DepenseController::class, 'store'])
         ->name('depense.store');
 
-    // Route::post('/category/store', [CategoryController::class, 'store'])
-    //     ->name('category.store');
-
 });
 
 
