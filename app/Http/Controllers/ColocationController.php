@@ -39,6 +39,9 @@ class ColocationController extends Controller
 
     public function create()
     {
+        if (auth()->user()->colocations()->wherePivot('status', 'accepted')->wherePivotNull('left_at')->exists()) {
+            return redirect()->route('dashboard')->with('error', 'You are already in a colocation.');
+        }
         return view('colocations.create');
     }
 
@@ -66,6 +69,10 @@ class ColocationController extends Controller
 
     public function store(Request $request)
     {
+        if (auth()->user()->colocations()->wherePivot('status', 'accepted')->wherePivotNull('left_at')->exists()) {
+            return redirect()->route('dashboard')->with('error', 'You are already in a colocation.');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -105,9 +112,9 @@ class ColocationController extends Controller
         Mail::raw(
             "You have been invited to join colocation '{$colocation->name}'. Accept here: " . route('colocations.accept', $token),
             function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('Invitation to join colocation');
-        }
+                $message->to($user->email)
+                    ->subject('Invitation to join colocation');
+            }
         );
 
         return back()->with('success', 'Invitation sent!');
@@ -158,8 +165,20 @@ class ColocationController extends Controller
                 }
             }
         });
-        // Example debt check (adjust to your logic)
-        $hasDebts = false; // replace with real check
+        
+        //debts logic
+        $totalOwes = DB::table('expense_user')
+            ->join('expenses', 'expense_user.expense_id', '=', 'expenses.id')
+            ->where('expenses.colocation_id', $colocation->id)
+            ->where('expense_user.user_id', $user->id)
+            ->sum('expense_user.share');
+
+        $totalPaid = Expense::where('colocation_id', $colocation->id)
+            ->where('payer_id', $user->id)
+            ->sum('amount');
+
+        $balance = $totalPaid - $totalOwes;
+        $hasDebts = $balance < 0;
 
         // Update pivot
         $colocation->members()->updateExistingPivot($user->id, [

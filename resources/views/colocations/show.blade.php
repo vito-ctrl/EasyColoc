@@ -83,7 +83,7 @@
                                             {{ $member->name }}
                                         </span>
                                         <span class="text-xs text-zinc-500">
-                                            {{ ucfirst($member->pivot->role) }}
+                                            {{ $colocation->owner_id === $member->id ? 'owner' : 'member' }}
                                         </span>
                                         <span class="
                                             {{ $member->balance > 0 ? 'text-emerald-400' : 
