@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Colocation;
 
 class CategoryController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request, Colocation $colocation)
+    {
         $request->validate([
-            'name' => 'required|string|max:100',
-            'colocation_id' => 'required|exists:colocations,id',
+            'name' => 'required|string|max:255',
         ]);
 
-        $category = Category::create([
+        $colocation->categories()->create([
             'name' => $request->name,
-            'colocation_id' => $request->colocation_id,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'category created.');
+        return back()->with('success', 'Category created successfully.');
     }
 }
