@@ -4,6 +4,29 @@
 <div class="min-h-screen bg-zinc-950 flex items-start justify-center px-4 py-12">
     <div class="w-full max-w-lg space-y-6">
 
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <a href="{{ route('depense.create', $colocation->id) }}" 
+                class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-semibold transition-all shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 active:scale-[0.98]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Create New depense
+            </a>
+        </div>
+
+        <form action="{{ route('categories.store', $colocation->id) }}" method="POST" class="space-y-4">
+            @csrf
+
+            <input type="text" name="name" placeholder="WIFI" required
+                class="w-full bg-zinc-800/60 border border-zinc-700 text-zinc-100 placeholder-zinc-500 rounded-xl px-4 py-2.5 text-sm">
+
+            <button type="submit"
+                class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
+                Create Category
+            </button>
+        </form>
+
+
         {{-- Header Card --}}
         <div class="relative bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden">
             <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"></div>

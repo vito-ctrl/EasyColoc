@@ -13,9 +13,9 @@ class DepenseController extends Controller
         return view('depenses.depenses');
     }
 
-    public function create() {
+    public function create($colocation_id) {
 
-        $colocation = Colocation::find(1); // temporary
+        $colocation = Colocation::find($colocation_id);
 
         $users = $colocation->activeMembers()->get();
 

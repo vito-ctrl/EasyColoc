@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\DepenseController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,14 +40,21 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
     Route::post('/colocations/{id}/leave', [ColocationController::class , 'leave'])
         ->name('colocations.leave');
 
+    Route::post('/colocations/{colocation}/categories', [CategoryController::class, 'store'])
+        ->name('categories.store');
+
     Route::get('/depense', [DepenseController::class, 'index'])
         ->name('depense');
 
-    Route::get('/depense/create', [DepenseController::class, 'create'])
+    Route::get('/depense/create/{colocation_id}', [DepenseController::class, 'create'])
         ->name('depense.create');
 
     Route::post('/depense/store', [DepenseController::class, 'store'])
         ->name('depense.store');
+
+    Route::post('/category/store', [CategoryController::class, 'store'])
+        ->name('category.store');
+
 });
 
 
