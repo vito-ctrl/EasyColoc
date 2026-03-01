@@ -52,13 +52,14 @@ class DepenseController extends Controller
         $count = $members->count();
 
         if ($count > 0) {
-            $share = round($amount / $count, 2);
+            $share = round($request->amount / $count, 2);
 
             foreach ($members as $member) {
                 $depense->users()->attach($member->id, [
                     'share' => $share,
                 ]);
             }
+
         }
 
         return back()->with('success', 'Colocation created.');
