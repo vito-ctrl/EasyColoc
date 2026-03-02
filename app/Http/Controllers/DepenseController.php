@@ -62,6 +62,6 @@ class DepenseController extends Controller
 
         }
 
-        return back()->with('success', 'Colocation created.');
+        return redirect()->route('colocations.show', $colocation->id)->with('success', 'expense created.');
     }
 }
