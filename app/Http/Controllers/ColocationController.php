@@ -98,8 +98,26 @@ class ColocationController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($colocation->members()->where('user_id', $user->id)->exists()) {
+        $existingMember = $colocation->members()
+            ->where('user_id', $user->id)
+            ->first();
+
+        if(!$user){
+            return back()->with('error', 'User not exists.');
+        }
+
+        if ($existingMember && $existingMember->pivot->left_at === null && $existingMember->pivot->status === 'accepted') {
             return back()->with('error', 'User already in this colocation.');
+        }
+
+        // Check if user is already in an active colocation
+        $alreadyInColocation = $user->colocations()
+            ->wherePivot('status', 'accepted')
+            ->wherePivotNull('left_at')
+            ->exists();
+
+        if ($alreadyInColocation) {
+            return back()->with('error', 'User is already in a colocation.');
         }
 
         $token = Str::uuid();
@@ -128,7 +146,6 @@ class ColocationController extends Controller
             return redirect()->route('dashboard')->with('error', 'Invalid token.');
         }
 
-        // Check if the current user matches the invited email (optional, extra security)
         $colocation = Colocation::find($membership->colocation_id);
 
         $colocation->members()->updateExistingPivot($membership->user_id, [
@@ -187,10 +204,10 @@ class ColocationController extends Controller
 
         // Adjust reputation
         if ($hasDebts) {
-            $user->decrement('reputation_score', 1);
+            $user->increment('reputation_score', 1);
         }
         else {
-            $user->increment('reputation_score', 1);
+            $user->decrement('reputation_score', 1);
         }
 
         return redirect()->route('dashboard')->with('success', 'You left the colocation.');

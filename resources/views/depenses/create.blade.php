@@ -10,16 +10,16 @@
             {{-- Top accent --}}
             <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"></div>
 
-            <div class="px-8 py-10">
+            <div class="px-8 py-8">
 
                 {{-- Header --}}
-                <div class="mb-8">
-                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 mb-4">
+                <div class="mb-4">
+                    {{-- <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 mb-4">
                         <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                   d="M12 4.5v15m7.5-7.5h-15"/>
                         </svg>
-                    </div>
+                    </div> --}}
                     <h1 class="text-xl font-semibold text-zinc-100 tracking-tight">Create Expense</h1>
                     <p class="text-sm text-zinc-500 mt-1">Add a new expense to this colocation.</p>
                 </div>
@@ -164,7 +164,7 @@
             </div>
         </div>
 
-        <p class="text-center text-xs text-zinc-600 mt-6">
+        <p class="text-center text-xs text-zinc-600 mt-6 mb-6">
             <a href="{{ url()->previous() }}" class="hover:text-zinc-400 transition-colors duration-150">← Go back</a>
         </p>
 

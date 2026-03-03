@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\DepenseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\CheckIfBanned;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class , 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'check.banned'])->group(function () {
+Route::middleware(['auth', CheckIfBanned::class])->group(function () {
 
     Route::get('/colocations/create', [ColocationController::class , 'create'])
         ->name('colocations.create');
@@ -50,7 +52,14 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
         ->name('depense.create');
 
     Route::post('/depense/store', [DepenseController::class, 'store'])
-        ->name('depense.store');
+        ->name('depense.store');        
+});
+        
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->name('admin.dashboard');
+    Route::post('/users/{user}/ban', [AdminController::class, 'ban'])->name('admin.users.ban');
+    Route::post('/users/{user}/unban', [AdminController::class, 'unban'])->name('admin.users.unban');
 
 });
 

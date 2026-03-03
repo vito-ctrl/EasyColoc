@@ -83,6 +83,9 @@
                                             {{ $member->name }}
                                         </span>
                                         <span class="text-xs text-zinc-500">
+                                            {{ $member->reputation_score}}
+                                        </span>
+                                        <span class="text-xs text-zinc-500">
                                             {{ $colocation->owner_id === $member->id ? 'owner' : 'member' }}
                                         </span>
                                         <span class="
